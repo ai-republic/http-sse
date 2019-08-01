@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.ai-republic</groupId>
+		<artifactId>http-sse</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>http-sse-impl</artifactId>
+
+	<name>HTTP-SSE Implementation</name>
+	<description>An implmeentation of the HTTP SSE API for receiving and sending SSE (Server-Sent-Events). SSE producers and consumers can be defined via annotations. A standalone mode is also provided including SSL support.</description>
+
+	<properties>
+		<encoding>UTF-8</encoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<annotation.version>1.3.4</annotation.version>
+		<cdi.version>2.0.1</cdi.version>
+		<inject.version>2.5.0</inject.version>
+		<owb.version>2.0.11</owb.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.ai-republic</groupId>
+			<artifactId>http-sse-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.ai-republic</groupId>
+			<artifactId>http-common</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+
+</project>
