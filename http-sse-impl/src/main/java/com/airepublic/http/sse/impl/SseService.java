@@ -42,7 +42,6 @@ import com.airepublic.http.common.SslSupport;
 import com.airepublic.http.sse.api.ISseRegistry;
 import com.airepublic.http.sse.api.ISseService;
 import com.airepublic.http.sse.api.ProducerEntry;
-import com.airepublic.http.sse.api.SseConsumer;
 import com.airepublic.http.sse.api.SseEvent;
 import com.airepublic.http.sse.api.SseProducer;
 
@@ -92,7 +91,7 @@ public class SseService implements Serializable, ISseService {
                 ByteBuffer[] buffers = { encode(event) };
 
                 if (sslEngine != null) {
-                    buffers = SslSupport.wrap(sslEngine, buffers);
+                    buffers = SslSupport.wrap(sslEngine, channel, buffers);
                 }
 
                 channel.write(buffers);
@@ -154,7 +153,7 @@ public class SseService implements Serializable, ISseService {
                         final SSLEngine sslEngine = entry.getValue();
 
                         if (sslEngine != null) {
-                            buffers = SslSupport.wrap(sslEngine, buffers);
+                            buffers = SslSupport.wrap(sslEngine, channel, buffers);
                         }
 
                         channel.write(buffers);
@@ -383,11 +382,13 @@ public class SseService implements Serializable, ISseService {
     }
 
     /**
-     * The task to execute a process the whole lifecycle of an {@link SseProducer}.<br/>
-     * - accepting the incoming request<br/>
-     * - sending the handshake response<br/>
-     * - sending {@link SseEvent}s by calling the associated {@link SseProducer} method<br/>
-     * - respecting delay and maximum times configured in the {@link SseProducer} annotation<br/>
+     * The task to execute a process the whole lifecycle of an {@link SseProducer}.
+     * <ul>
+     * <li>accepting the incoming request</li>
+     * <li>sending the handshake response</li>
+     * <li>sending {@link SseEvent}s by calling the associated {@link SseProducer} method</li>
+     * <li>respecting delay and maximum times configured in the {@link SseProducer} annotation</li>
+     * </ul>
      * 
      * @author Torsten Oltmanns
      *
@@ -490,11 +491,13 @@ public class SseService implements Serializable, ISseService {
 
 
     /**
-     * Processes the whole lifecycle of an {@link SseProducer}.<br/>
-     * - accepting the incoming request<br/>
-     * - sending the handshake response<br/>
-     * - sending {@link SseEvent}s by calling the associated {@link SseProducer} method<br/>
-     * - respecting delay and maximum times configured in the {@link SseProducer} annotation<br/>
+     * Processes the whole lifecycle of an {@link SseProducer}.
+     * <ul>
+     * <li>accepting the incoming request</li>
+     * <li>sending the handshake response</li>
+     * <li>sending {@link SseEvent}s by calling the associated {@link SseProducer} method</li>
+     * <li>respecting delay and maximum times configured in the {@link SseProducer} annotation</li>
+     * </ul>
      * 
      * @param channel the freshly accepted {@link SocketChannel}
      * @param sslContext the {@link SSLContext}
@@ -561,7 +564,7 @@ public class SseService implements Serializable, ISseService {
         ByteBuffer[] buffers = { response.getHeaderBuffer() };
 
         if (sslEngine != null) {
-            buffers = SslSupport.wrap(sslEngine, buffers);
+            buffers = SslSupport.wrap(sslEngine, channel, buffers);
         }
 
         channel.write(buffers);
@@ -602,7 +605,7 @@ public class SseService implements Serializable, ISseService {
         ByteBuffer[] buffers = { request.getHeaderBuffer() };
 
         if (sslEngine != null) {
-            buffers = SslSupport.wrap(sslEngine, buffers);
+            buffers = SslSupport.wrap(sslEngine, channel, buffers);
         }
 
         channel.write(buffers);
@@ -726,10 +729,10 @@ public class SseService implements Serializable, ISseService {
 
 
     /**
-     * Receives {@link SseEvent}s asynchronously from the URI specified in the {@link SseConsumer}
-     * and notifies the {@link Consumer} when an event has been read.
+     * Receives {@link SseEvent}s asynchronously from the specified URI and notifies the
+     * {@link Consumer} when an event has been read.
      * 
-     * @param channel the {@link SseConsumer}
+     * @param uri the {@link URI} to the event source
      * @param consumer the {@link Consumer} accepting the received {@link SseEvent}s
      * @return a {@link Future}
      * @throws IOException if sending fails
@@ -741,8 +744,10 @@ public class SseService implements Serializable, ISseService {
 
 
     /**
-     * Reads {@link SseEvent}s from the {@link ByteBuffer}. <br/>
+     * Reads {@link SseEvent}s from the {@link ByteBuffer}.
+     * <p>
      * NOTE: This method expects complete events to be contained in the buffer.
+     * </p>
      * 
      * @param buffer the {@link ByteBuffer}
      * @return the {@link SseEvent}
@@ -860,7 +865,7 @@ public class SseService implements Serializable, ISseService {
     /**
      * Encodes the {@link SseEvent}s into a {@link ByteBuffer}.
      * 
-     * @param event the {@link SseEvent
+     * @param events the {@link SseEvent}s
      * @return the {@link ByteBuffer} containing the event
      * @throws IOException if something fails
      */

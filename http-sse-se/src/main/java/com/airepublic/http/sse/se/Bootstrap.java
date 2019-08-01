@@ -176,9 +176,11 @@ public class Bootstrap {
 
 
     /**
-     * Starts the server as an application. Command line arguments can be as follows:<br/>
+     * Starts the server as an application. Command line arguments can be as follows:
+     * <p>
      * SYNTAX: [&lt;port (default 8080)&gt;] | [&lt;port&gt; &lt;keystorefile&gt;
      * &lt;keystorepassword&gt; &lt;truststorefile&gt; &lt;truststorepassword&gt;]
+     * </p>
      * 
      * @param args see syntax description
      * @throws IOException if something goes wrong

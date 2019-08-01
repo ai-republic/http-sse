@@ -19,15 +19,17 @@ import com.airepublic.http.common.HttpResponse;
 public interface ISseService {
 
     /**
-     * Processes the whole lifecycle of an {@link SseProducer}.<br/>
-     * - accepting the incoming request<br/>
-     * - sending the handshake response<br/>
-     * - sending {@link SseEvent}s by calling the associated {@link SseProducer} method<br/>
-     * - respecting delay and maximum times configured in the {@link SseProducer} annotation<br/>
+     * Processes the whole lifecycle of an {@link SseProducer}.
+     * <ul>
+     * <li>accepting the incoming request</li>
+     * <li>sending the handshake response</li>
+     * <li>sending {@link SseEvent}s by calling the associated {@link SseProducer} method</li>
+     * <li>respecting delay and maximum times configured in the {@link SseProducer} annotation</li>
+     * </ul>
      * 
      * @param channel the freshly accepted {@link SocketChannel}
      * @param sslContext the {@link SSLContext}
-     * @param sseRegistry the {@link SseRegistry} where the producer is registered
+     * @param sseRegistry the {@link ISseRegistry} where the producer is registered
      */
     void processRequest(SocketChannel channel, SSLContext sslContext, ISseRegistry sseRegistry);
 
@@ -37,6 +39,7 @@ public interface ISseService {
      * 
      * @param channel the {@link SocketChannel}
      * @param sslEngine the {@link SSLEngine} or null
+     * @return the {@link HttpRequest} generated for the handshake
      * @throws IOException if handshake fails
      */
     HttpRequest handshake(SocketChannel channel, SSLEngine sslEngine) throws IOException;
@@ -83,7 +86,7 @@ public interface ISseService {
      * Receives {@link SseEvent}s asynchronously from the URI specified in the {@link SseConsumer}
      * and notifies the {@link Consumer} when an event has been read.
      * 
-     * @param channel the {@link SseConsumer}
+     * @param uri the {@link URI} to the event source
      * @param consumer the {@link Consumer} accepting the received {@link SseEvent}s
      * @return a {@link Future}
      * @throws IOException if sending fails
@@ -92,10 +95,13 @@ public interface ISseService {
 
 
     /**
-     * Reads {@link SseEvent}s from the {@link ByteBuffer}. <br/>
+     * Reads {@link SseEvent}s from the {@link ByteBuffer}.
+     * <p>
      * NOTE: This method expects complete events to be contained in the buffer.
+     * </p>
      * 
      * @param buffer the {@link ByteBuffer}
+     * @param isChunked flag whether the connection stream is chunked
      * @return the {@link SseEvent}
      * @throws IOException if reading the event fails
      */
@@ -105,7 +111,7 @@ public interface ISseService {
     /**
      * Encodes the {@link SseEvent}s into a {@link ByteBuffer}.
      * 
-     * @param event the {@link SseEvent
+     * @param events the {@link SseEvent}s
      * @return the {@link ByteBuffer} containing the event
      * @throws IOException if something fails
      */

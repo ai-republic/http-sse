@@ -16,18 +16,30 @@ import com.airepublic.http.sse.api.SseEvent;
 import com.airepublic.http.sse.api.SseProducer;
 
 /**
- * The registry for all SSE resources annotated with {@link SseProducer} or
- * {@link SseConsumer}.<br/>
+ * The registry for all SSE resources annotated with {@link SseProducer} or {@link SseConsumer}.
+ * <p>
  * After {@link SseConsumer}s have been started the associated {@link Future} can be acquired via
  * the {@link SseRegistry#getSseConsumer(URI)} and similar methods to cancel them listening for
- * {@link SseEvent}s. <br/>
- * Example:</br>
- * <br/>
- * {@code Future<Void> future = sseService.receive(uri, consumer);}<br/>
- * <code>sseRegistry.registerSseConsumer(uri, future);<br/>
- * ...<br/>
- * Future<Void> future = sseRegistry.getSseConsumer(uri);<br/>
- * future.cancel(); </coode>
+ * {@link SseEvent}s.
+ * </p>
+ * <p>
+ * Example:
+ * </p>
+ * <p>
+ * {@code Future<Void> future = sseService.receive(uri, consumer);}
+ * </p>
+ * <p>
+ * {@code sseRegistry.registerSseConsumer(uri, future);}
+ * </p>
+ * <p>
+ * ...
+ * </p>
+ * <p>
+ * {@code Future<Void> future = sseRegistry.getSseConsumer(uri);}
+ * </p>
+ * <p>
+ * {@code future.cancel();}
+ * </p>
  * 
  * @author Torsten Oltmanns
  *
@@ -46,7 +58,7 @@ public class SseRegistry implements Closeable, ISseRegistry {
      * @param method the producer {@link Method}
      */
     @Override
-    public <T> void registerSseProducer(final String path, final Class<?> clazz, final Method method) {
+    public void registerSseProducer(final String path, final Class<?> clazz, final Method method) {
         if (producers.containsKey(path)) {
             throw new IllegalArgumentException("Path '" + path + "' is already registered as SseProducer!");
         }

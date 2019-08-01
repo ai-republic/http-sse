@@ -11,8 +11,8 @@
 
 	<artifactId>http-sse-se</artifactId>
 
-	<name>HTTP-SSE Implementation</name>
-	<description>An standalone bootstrap of a HTTP SSE server for receiving and sending SSE (Server-Sent-Events). SSE producers and consumers can be defined via annotations. A standalone mode is also provided including SSL support.</description>
+	<name>HTTP-SSE standalone server</name>
+	<description>A standalone HTTP SSE server can be bootstrapped for receiving and sending SSE (Server-Sent-Events). SSE producers and consumers can be defined via annotations. A standalone mode is also provided including SSL support.</description>
 
 	<properties>
 		<encoding>UTF-8</encoding>

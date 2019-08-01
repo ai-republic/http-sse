@@ -15,7 +15,7 @@ public interface ISseRegistry extends Closeable {
      * @param clazz the producer class
      * @param method the producer {@link Method}
      */
-    <T> void registerSseProducer(String path, Class<?> clazz, Method method);
+    void registerSseProducer(String path, Class<?> clazz, Method method);
 
 
     /**
@@ -40,7 +40,7 @@ public interface ISseRegistry extends Closeable {
      * 
      * @param uri the {@link URI} of the event source
      * @param sseConsumer the {@link Future} returned from calling
-     *        {@link SseService#receive(URI, java.util.function.Consumer)}
+     *        {@link ISseService#receive(URI, java.util.function.Consumer)}
      */
     void registerSseConsumer(URI uri, Future<Void> sseConsumer);
 
@@ -50,7 +50,7 @@ public interface ISseRegistry extends Closeable {
      * 
      * @param uri the {@link URI} of the event source
      * @return the {@link Future} returned from calling
-     *         {@link SseService#receive(URI, java.util.function.Consumer)}
+     *         {@link ISseService#receive(URI, java.util.function.Consumer)}
      */
     Future<Void> getSseConsumer(URI uri);
 
@@ -60,7 +60,7 @@ public interface ISseRegistry extends Closeable {
      * 
      * @param uri the {@link URI} of the event source
      * @return the {@link Future} returned from calling
-     *         {@link SseService#receive(URI, java.util.function.Consumer)}
+     *         {@link ISseService#receive(URI, java.util.function.Consumer)}
      */
     Future<Void> unregisterSseConsumer(URI uri);
 
@@ -69,7 +69,7 @@ public interface ISseRegistry extends Closeable {
      * Gets all registered {@link SseConsumer}s.
      * 
      * @return a mapping of {@link URI} of the event source and the {@link Future} returned from
-     *         calling {@link SseService#receive(URI, java.util.function.Consumer)}
+     *         calling {@link ISseService#receive(URI, java.util.function.Consumer)}
      */
     Map<URI, Future<Void>> getAllConsumers();
 
