@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>com.ai-republic</groupId>
 			<artifactId>http-common</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 
