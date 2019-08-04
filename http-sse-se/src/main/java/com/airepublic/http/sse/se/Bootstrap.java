@@ -15,10 +15,10 @@ import javax.inject.Inject;
 import javax.net.ssl.SSLContext;
 
 import com.airepublic.http.common.SslSupport;
+import com.airepublic.http.sse.api.ISseRegistry;
+import com.airepublic.http.sse.api.ISseService;
 import com.airepublic.http.sse.api.SseConsumer;
 import com.airepublic.http.sse.api.SseProducer;
-import com.airepublic.http.sse.impl.SseRegistry;
-import com.airepublic.http.sse.impl.SseService;
 import com.airepublic.reflections.Reflections;
 
 /**
@@ -31,9 +31,30 @@ import com.airepublic.reflections.Reflections;
 public class Bootstrap {
     private static final Logger logger = Logger.getGlobal();
     @Inject
-    private SseRegistry sseRegistry;
+    private ISseRegistry sseRegistry;
     @Inject
-    private SseService sseService;
+    private ISseService sseService;
+
+
+    /**
+     * Constructor (for CDI use only!).
+     */
+    public Bootstrap() {
+    }
+
+
+    /**
+     * Constructor (for non-CDI use only!).
+     * 
+     * @param sseRegistry the {@link ISseRegistry}
+     * @param sseService the {@link ISseService}
+     */
+    public Bootstrap(final ISseRegistry sseRegistry, final ISseService sseService) {
+        this.sseRegistry = sseRegistry;
+        this.sseService = sseService;
+
+        init();
+    }
 
 
     /**
