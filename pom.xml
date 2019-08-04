@@ -3,7 +3,7 @@
 
 	<groupId>com.ai-republic</groupId>
 	<artifactId>http-sse</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>HTTP-SSE</name>
@@ -30,7 +30,7 @@
 		<connection>scm:git:git://github.com/ai-republic/http-sse.git</connection>
 		<developerConnection>scm:git:git@github.com:ai-republic/http-sse.git</developerConnection>
 		<url>https://github.com/ai-republic/http-sse</url>
-		<tag>http-sse-1.0.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>

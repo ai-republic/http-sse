@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.ai-republic</groupId>
     <artifactId>http-sse</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
   
   <artifactId>http-sse-test</artifactId>
