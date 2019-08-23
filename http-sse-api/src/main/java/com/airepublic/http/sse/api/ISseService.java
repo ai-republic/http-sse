@@ -117,4 +117,21 @@ public interface ISseService {
      */
     ByteBuffer encode(SseEvent... events) throws IOException;
 
+
+    /**
+     * Gets the handshake {@link HttpResponse} to the client.
+     *
+     * @return the {@link HttpResponse} containing the un-encoded response
+     */
+    HttpResponse getHandshakeResponse();
+
+
+    /**
+     * Sends the handshake response to the client.
+     * 
+     * @param channel the {@link SocketChannel} to the client
+     * @param sslEngine the {@link SSLEngine}
+     * @throws IOException if sending fails
+     */
+    void sendHandshakeResponse(final SocketChannel channel, final SSLEngine sslEngine) throws IOException;
 }

@@ -546,6 +546,18 @@ public class SseService implements Serializable, ISseService {
     }
 
 
+    @Override
+    public HttpResponse getHandshakeResponse() {
+        final Headers headers = new Headers();
+        headers.add(Headers.CONTENT_TYPE, "text/event-stream");
+        headers.add(Headers.CONNECTION, "keep-alive");
+        headers.add(Headers.CACHE_CONTROL, "no-cache");
+        headers.add(Headers.PRAGMA, "no-cache");
+
+        return new HttpResponse(HttpStatus.SUCCESS, headers);
+    }
+
+
     /**
      * Sends the handshake response to the client.
      * 
@@ -553,15 +565,9 @@ public class SseService implements Serializable, ISseService {
      * @param sslEngine the {@link SSLEngine}
      * @throws IOException if sending fails
      */
+    @Override
     public void sendHandshakeResponse(final SocketChannel channel, final SSLEngine sslEngine) throws IOException {
-        final Headers headers = new Headers();
-        headers.add(Headers.CONTENT_TYPE, "text/event-stream");
-        headers.add(Headers.CONNECTION, "keep-alive");
-        headers.add(Headers.CACHE_CONTROL, "no-cache");
-        headers.add(Headers.PRAGMA, "no-cache");
-        final HttpResponse response = new HttpResponse(HttpStatus.SUCCESS, headers);
-
-        ByteBuffer[] buffers = { response.getHeaderBuffer() };
+        ByteBuffer[] buffers = { getHandshakeResponse().getHeaderBuffer() };
 
         if (sslEngine != null) {
             buffers = SslSupport.wrap(sslEngine, channel, buffers);
